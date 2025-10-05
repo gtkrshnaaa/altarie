@@ -16,13 +16,33 @@ export async function createApp() {
   // Load environment variables
   loadEnv()
 
-  const app = Fastify({ logger: process.env.NODE_ENV === 'development' })
+  const isDev = process.env.NODE_ENV === 'development'
+  const app = Fastify({
+    logger: isDev
+      ? {
+          transport: {
+            target: 'pino-pretty',
+            options: {
+              translateTime: 'HH:MM:ss Z',
+              colorize: true,
+              ignore: 'pid,hostname'
+            }
+          }
+        }
+      : true
+  })
 
   // Serve static files from /public
   const fastifyStatic = await import('@fastify/static')
   await app.register(fastifyStatic.default, {
     root: path.join(__dirname, '../public')
   })
+
+  // Security and CORS (safe defaults)
+  const helmet = await import('@fastify/helmet')
+  await app.register(helmet.default)
+  const cors = await import('@fastify/cors')
+  await app.register(cors.default, { origin: true })
 
   // Register Nunjucks view engine
   await registerView(app)
@@ -42,6 +62,12 @@ export async function createApp() {
 
   // Register application-level provider(s)
   await registerAppProvider(app)
+
+  // Register development tools
+  if (isDev) {
+    const { registerDevtools } = await import('../core/devtools.js')
+    await registerDevtools(app)
+  }
 
   const port = Number(appConfig.port)
   await app.listen({ port })

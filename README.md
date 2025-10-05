@@ -294,6 +294,39 @@ This is conceptually similar to Laravel's Service Providers but in a lightweight
 
 ---
 
+## Developer Experience
+
+### Youch Error Pages
+
+In development, errors are rendered with Youch as HTML if the client accepts `text/html`. Otherwise, JSON is returned. In production, a compact JSON is returned.
+
+### Pretty Logs
+
+When `NODE_ENV=development`, Fastify logger uses `pino-pretty` transport with colored, human-friendly logs.
+
+### Devtools (development only)
+
+- `GET /_altarie/routes` — list of registered routes (method, url, basic meta).
+- `GET /_altarie/env` — masked environment variables (secrets are partially masked).
+
+These endpoints are enabled only in development.
+
+### Security & CORS
+
+`@fastify/helmet` and `@fastify/cors` are registered with safe defaults. Adjust as needed in `bootstrap/app.js`.
+
+### Nodemon
+
+Auto-reload during development is enabled through `nodemon`.
+
+```bash
+npm run dev
+```
+
+This will watch files and restart the server automatically.
+
+---
+
 ## Laravel Features Retained
 
 | Laravel Feature            | altarie.js Equivalent        |

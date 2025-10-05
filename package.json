@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development node server.js",
+    "dev": "NODE_ENV=development nodemon server.js",
     "start": "NODE_ENV=production node server.js",
     "test": "node tests/run.js",
     "db:migrate": "node database/migrate.js"
@@ -16,11 +16,16 @@
   "dependencies": {
     "@fastify/static": "^7.0.2",
     "@fastify/autoload": "^5.10.0",
+    "@fastify/helmet": "^13.0.0",
+    "@fastify/cors": "^9.0.1",
     "better-sqlite3": "^11.5.0",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "nunjucks": "^3.2.4",
+    "pino-pretty": "^11.2.2",
     "youch": "^3.3.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^3.1.6"
+  }
 }
