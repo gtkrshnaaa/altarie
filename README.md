@@ -184,6 +184,116 @@ Example template file: `app/views/home.njk`.
 
 ---
 
+## Configuration
+
+Place configuration files under `config/`:
+
+- `config/app.js` — app name, environment, and port.
+- `config/view.js` — Nunjucks options and views directory.
+- `config/database.js` — database client and connection.
+
+These are consumed by the bootstrap and core modules, e.g. `bootstrap/app.js` reads `config/app.js` for the port and app name.
+
+---
+
+## Controllers and Routes
+
+Use controllers under `app/controllers/` and bind them in route modules.
+
+```js
+// app/controllers/HomeController.js
+export class HomeController {
+  async index(request, reply) {
+    return reply.render('home.njk', { env: process.env.NODE_ENV || 'development' })
+  }
+}
+```
+
+```js
+// routes/web.js
+import { HomeController } from '../app/controllers/HomeController.js'
+
+export default async function (app) {
+  const home = new HomeController()
+  app.get('/', async (request, reply) => home.index(request, reply))
+}
+```
+
+---
+
+## API Routes
+
+Add API endpoints in `routes/api.js`:
+
+```js
+// routes/api.js
+export default async function (app) {
+  app.get('/api/health', async () => ({
+    status: 'ok',
+    name: 'altarie.js',
+    env: process.env.NODE_ENV || 'development',
+    time: new Date().toISOString()
+  }))
+}
+```
+
+---
+
+## Database & Migrations
+
+Database uses `better-sqlite3` by default with a simple migration runner:
+
+- Config: `config/database.js`
+- Connector: `core/database.js`
+- Runner: `database/migrate.js`
+
+Run migrations:
+
+```bash
+npm run db:migrate
+```
+
+SQLite file will be created at `database/database.sqlite`.
+
+---
+
+## Testing
+
+Basic smoke test exists at `tests/run.js` to start the server and hit `/api/health`.
+
+```bash
+npm test
+```
+
+---
+
+## Providers
+
+Register application-level services under `app/providers/` and wire them in `bootstrap/app.js`.
+
+Example provider:
+
+```js
+// app/providers/AppProvider.js
+export async function register(app) {
+  // app.decorate('version', '0.1.0')
+}
+```
+
+Registered in bootstrap:
+
+```js
+// bootstrap/app.js
+import { register as registerAppProvider } from '../app/providers/AppProvider.js'
+
+// ... after creating app & before app.listen
+await registerAppProvider(app)
+```
+
+This is conceptually similar to Laravel's Service Providers but in a lightweight, ESM-friendly form.
+
+---
+
 ## Laravel Features Retained
 
 | Laravel Feature            | altarie.js Equivalent        |

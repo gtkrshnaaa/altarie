@@ -3,15 +3,18 @@
 import nunjucks from 'nunjucks'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import viewConfig from '../config/view.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 export async function registerView(app) {
-  const viewsPath = path.join(__dirname, '../app/views')
+  // Resolve views directory from config
+  const root = path.join(__dirname, '..')
+  const viewsPath = path.join(root, viewConfig.viewsPath || 'app/views')
 
   const env = nunjucks.configure(viewsPath, {
-    autoescape: true,
+    autoescape: viewConfig.autoescape !== undefined ? viewConfig.autoescape : true,
     noCache: process.env.NODE_ENV === 'development'
   })
 

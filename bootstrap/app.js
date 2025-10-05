@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url'
 import { handleError } from '../core/error.js'
 import { loadEnv } from '../core/env.js'
 import { registerView } from '../core/view.js'
+import appConfig from '../config/app.js'
+import { register as registerAppProvider } from '../app/providers/AppProvider.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -33,9 +35,17 @@ export async function createApp() {
   // Global error handler
   app.setErrorHandler(handleError)
 
-  const port = Number(process.env.APP_PORT || 3000)
+  // 404 Not Found handler renders Nunjucks template
+  app.setNotFoundHandler(async (request, reply) => {
+    return reply.render('errors/404.njk', { url: request.url })
+  })
+
+  // Register application-level provider(s)
+  await registerAppProvider(app)
+
+  const port = Number(appConfig.port)
   await app.listen({ port })
-  console.log(`altarie.js running at http://localhost:${port}`)
+  console.log(`${appConfig.name} running at http://localhost:${port}`)
 
   return app
 }
