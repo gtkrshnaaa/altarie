@@ -1,0 +1,58 @@
+{
+  "name": "altarie",
+  "version": "0.1.0",
+  "description": "Laravel-like JavaScript framework (altarie.js)",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtkrshnaaa/altarie.git"
+  },
+  "homepage": "https://github.com/gtkrshnaaa/altarie/altarie",
+  "keywords": [
+    "framework",
+    "fastify",
+    "nunjucks",
+    "sqlite",
+    "laravel-like",
+    "esm",
+    "nodejs"
+  ],
+  "files": [
+    "README.md",
+    "altarieguide.md",
+    "server.js",
+    "bootstrap/",
+    "config/",
+    "core/",
+    "routes/",
+    "app/",
+    "database/",
+    "public/",
+    "tests/"
+  ],
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon server.js",
+    "start": "NODE_ENV=production node server.js",
+    "test": "node tests/run.js",
+    "db:migrate": "node database/migrate.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@fastify/static": "^7.0.2",
+    "@fastify/autoload": "^5.10.0",
+    "@fastify/helmet": "^13.0.0",
+    "@fastify/cors": "^9.0.1",
+    "better-sqlite3": "^11.5.0",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.28.1",
+    "nunjucks": "^3.2.4",
+    "pino-pretty": "^11.2.2",
+    "youch": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.6"
+  }
+}
