@@ -16,10 +16,10 @@ npm run dev
 
 ## Documentation
 
-- [Getting Started](docs/getting-started.md)
-- [Views](docs/views.md)
-- [Providers](docs/providers.md)
-- [Testing](docs/testing.md)
+- [Getting Started](../docs/getting-started.md)
+- [Views](../docs/views.md)
+- [Providers](../docs/providers.md)
+- [Testing](../docs/testing.md)
 
 ## License
 

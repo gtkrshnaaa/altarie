@@ -40,26 +40,26 @@ Goals:
 
 - Framework implementation lives in `altarie/`
 - Example app scaffold lives in `examplecase/student-management/`
-- Root-level [README.md](cci:7://file:///home/user/space/dev/altariespace/altarie/README.md:0:0-0:0) (this file)
+- Root-level README.md (this file)
 
 Key entry points and directories:
 
-- [altarie/server.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/server.js:0:0-0:0) — Application entry
-- [altarie/bootstrap/app.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/bootstrap/app.js:0:0-0:0) — Kernel: loads env, logger, view, routes, error handler, providers, devtools
-- `altarie/config/` — App, view, and database config
-- `altarie/core/` — Core modules (env, view, error, devtools, database)
-- `altarie/routes/` — Route modules ([web.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/routes/web.js:0:0-0:0), [api.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/routes/api.js:0:0-0:0))
-- `altarie/app/` — Controllers, middleware, models, providers, views
-- `altarie/database/` — Migration runner and folders
-- `altarie/tests/` — Basic smoke tests
-- `altarie/public/` — Static files
+- `altarie/template/server.js` — Application entry
+- `altarie/template/bootstrap/app.js` — Kernel: loads env, logger, view, routes, error handler, providers, devtools
+- `altarie/template/config/` — App, view, and database config
+- `altarie/template/core/` — Core modules (env, view, error, devtools, database)
+- `altarie/template/routes/` — Route modules (`web.js`, `api.js`)
+- `altarie/template/app/` — Controllers, middleware, models, providers, views
+- `altarie/template/database/` — Migration runner and folders
+- `altarie/template/tests/` — Basic smoke tests
+- `altarie/template/public/` — Static files
 
 ---
 
-## Folder Structure (inside altarie/)
+## Folder Structure (inside `altarie/template/`)
 
 ```
-altarie/
+altarie/template/
 ├── app/
 │   ├── controllers/
 │   ├── middleware/
@@ -104,7 +104,7 @@ Steps:
 
 1) Install dependencies
 ```bash
-cd altarie
+cd altarie/template
 npm install
 ```
 
@@ -135,9 +135,9 @@ Devtools (development only):
 
 ## Configuration
 
-- [config/app.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/config/app.js:0:0-0:0) — app name, env, port
-- [config/view.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/config/view.js:0:0-0:0) — Nunjucks options and view directory
-- [config/database.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/config/database.js:0:0-0:0) — database client and connection
+- `config/app.js` — app name, env, port
+- `config/view.js` — Nunjucks options and view directory
+- `config/database.js` — database client and connection
 
 Environment variables are loaded from `.env` by [core/env.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/core/env.js:0:0-0:0). Defaults are chosen for a smooth local experience.
 
@@ -147,7 +147,7 @@ Environment variables are loaded from `.env` by [core/env.js](cci:7://file:///ho
 
 Routes are auto-loaded from `routes/` using `@fastify/autoload`.
 
-Example [routes/web.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/routes/web.js:0:0-0:0):
+Example `routes/web.js`:
 ```js
 import { HomeController } from '../app/controllers/HomeController.js'
 import { auth } from '../app/middleware/auth.js'
@@ -165,7 +165,7 @@ export default async function (app) {
 }
 ```
 
-Example controller [app/controllers/HomeController.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/app/controllers/HomeController.js:0:0-0:0):
+Example controller `app/controllers/HomeController.js`:
 ```js
 export class HomeController {
   async index(request, reply) {
@@ -178,11 +178,11 @@ export class HomeController {
 
 ## Views (Nunjucks)
 
-Views live under `app/views/`. The view engine is registered via [core/view.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/core/view.js:0:0-0:0) and exposes `reply.render(template, data)`.
+Views live under `app/views/`. The view engine is registered via `core/view.js` and exposes `reply.render(template, data)`.
 
 Examples:
-- [app/views/home.njk](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/app/views/home.njk:0:0-0:0)
-- [app/views/dashboard.njk](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/app/views/dashboard.njk:0:0-0:0)
+- `app/views/home.njk`
+- `app/views/dashboard.njk`
 - `app/views/layouts/...`
 - `app/views/errors/404.njk` (used by not-found handler)
 
@@ -192,9 +192,9 @@ Examples:
 
 Default database is `better-sqlite3` with a simple, file-based workflow.
 
-- Config: [config/database.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/config/database.js:0:0-0:0)
-- Connector: [core/database.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/core/database.js:0:0-0:0)
-- Runner: [database/migrate.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/database/migrate.js:0:0-0:0) (looks for files in `database/migrations/`)
+- Config: `config/database.js`
+- Connector: `core/database.js`
+- Runner: `database/migrate.js` (looks for files in `database/migrations/`)
 
 Run migrations:
 ```bash
@@ -207,7 +207,7 @@ The SQLite file is created at `database/database.sqlite` if it doesn’t exist.
 
 ## Error Handling
 
-[core/error.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/core/error.js:0:0-0:0) uses Youch to render pretty HTML error pages in development (when the client accepts `text/html`). Otherwise, JSON is returned. In production, errors are returned as compact JSON.
+`core/error.js` uses Youch to render pretty HTML error pages in development (when the client accepts `text/html`). Otherwise, JSON is returned. In production, errors are returned as compact JSON.
 
 ---
 
@@ -223,7 +223,7 @@ The SQLite file is created at `database/database.sqlite` if it doesn’t exist.
 
 ## Testing
 
-A basic smoke test exists in [tests/run.js](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/tests/run.js:0:0-0:0). It starts the server and hits `/api/health`.
+A basic smoke test exists in `tests/run.js`. It starts the server and hits `/api/health`.
 
 Run:
 ```bash
@@ -243,6 +243,6 @@ npm test
 
 ## License
 
-MIT. See [altarie/LICENSE](cci:7://file:///home/user/space/dev/altariespace/altarie/altarie/LICENSE:0:0-0:0).
+MIT. See `altarie/LICENSE`.
 
 ---
