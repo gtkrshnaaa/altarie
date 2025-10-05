@@ -8,6 +8,12 @@
 
 ---
 
+## Developer Guide
+
+Looking for a practical step-by-step guide? See `altarieguide.md` in this package for instructions on building apps with Altarie.js.
+
+---
+
 # Framework Concept: **altarie.js**
 
 > “Laravel experience, JavaScript simplicity.”
