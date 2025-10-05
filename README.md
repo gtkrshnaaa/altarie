@@ -165,7 +165,22 @@ export async function createApp() {
   await app.listen({ port: process.env.APP_PORT || 3000 })
   console.log(`altarie.js running at http://localhost:${process.env.APP_PORT || 3000}`)
 }
+
+### View Rendering (Nunjucks)
+
+The default landing page is rendered via Nunjucks templates (no `public/index.html`).
+Place your templates under `app/views/` and render them from routes or controllers:
+  
+```js
+// routes/web.js
+export default async function (app) {
+  app.get('/', async (request, reply) => {
+    return reply.render('home.njk', { env: process.env.NODE_ENV })
+  })
+}
 ```
+
+Example template file: `app/views/home.njk`.
 
 ---
 
