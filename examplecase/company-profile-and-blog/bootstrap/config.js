@@ -141,6 +141,13 @@ const boot = {
       await this.setupViews(app)
     }
 
+    // Cookies and form parsing for auth
+    const cookieSecret = process.env.COOKIE_SECRET || 'dev-cookie-secret-change-me'
+    const cookie = await import('@fastify/cookie')
+    await app.register(cookie.default, { secret: cookieSecret, parseOptions: {} })
+    const formbody = await import('@fastify/formbody')
+    await app.register(formbody.default)
+
     // Optional global rate limit (enable via RATE_LIMIT_ENABLED=true)
     if (String(process.env.RATE_LIMIT_ENABLED || '').toLowerCase() === 'true') {
       const rateLimit = await import('@fastify/rate-limit')

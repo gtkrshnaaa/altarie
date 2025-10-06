@@ -1,0 +1,29 @@
+{% extends "layouts/base.njk" %}
+{% block title %}Admin Dashboard — Altarie Studio{% endblock %}
+{% block content %}
+  <h1>Admin Dashboard</h1>
+  <p class="muted">Welcome, {{ user.name }} ({{ user.email }}). <a href="/admin/logout">Logout</a></p>
+
+  <div class="grid">
+    <section class="card item">
+      <h3>Stats</h3>
+      <ul class="features">
+        <li>Products: {{ stats.products }}</li>
+        <li>Posts: {{ stats.posts }}</li>
+        <li>Users: {{ stats.users }}</li>
+      </ul>
+    </section>
+    <section class="card item">
+      <h3>Recent Products</h3>
+      <ul class="features">
+        {% for p in products %}<li>{{ p.name }}</li>{% endfor %}
+      </ul>
+    </section>
+    <section class="card item">
+      <h3>Recent Posts</h3>
+      <ul class="features">
+        {% for p in posts %}<li>{{ p.title }}</li>{% endfor %}
+      </ul>
+    </section>
+  </div>
+{% endblock %}

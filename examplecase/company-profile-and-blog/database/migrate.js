@@ -5,8 +5,13 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { getDb, closeDb } from '../core/database.js'
+import { loadEnv } from '../core/env.js'
 
 async function run() {
+  // Ensure env is loaded for migrations needing it
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = path.dirname(__filename)
+  loadEnv(path.join(__dirname, '..'))
   const db = getDb()
   try {
     // Ensure migrations table exists
@@ -19,8 +24,6 @@ async function run() {
       );
     `)
 
-    const __filename = fileURLToPath(import.meta.url)
-    const __dirname = path.dirname(__filename)
     const dir = path.join(__dirname, 'migrations')
     const files = fs.readdirSync(dir)
       .filter(f => f.endsWith('.js'))
