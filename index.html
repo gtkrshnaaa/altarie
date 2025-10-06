@@ -57,7 +57,7 @@
     /* Prevent horizontal scroll */
     html, body { overflow-x: hidden; }
     * { max-width: 100%; }
-    /* Mobile hero adjustments */
+    /* Mobile responsive adjustments */
     @media (max-width: 768px) {
       .hero-grid { 
         display: flex; 
@@ -68,6 +68,11 @@
       .hero-section {
         padding-top: 2rem;
         padding-bottom: 2rem;
+      }
+      /* Ensure all grids stack properly on mobile */
+      .mobile-stack {
+        display: flex !important;
+        flex-direction: column !important;
       }
     }
   </style>
@@ -260,7 +265,7 @@ cp .env.example .env
   <section id="structure" class="py-12 md:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">Project Structure</h2>
-      <div class="mt-6 grid md:grid-cols-2 gap-6">
+      <div class="mt-6 flex flex-col md:grid md:grid-cols-2 gap-6">
         <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Inside <code>altarie/</code></h3>
           <ul class="mt-3 text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc list-inside">
@@ -276,7 +281,9 @@ cp .env.example .env
         </div>
         <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Commands</h3>
-          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded text-sm"><code>npm run dev   # development with auto-reload
+          <div class="relative mt-3">
+            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300 z-10 bg-white dark:bg-[#161a16] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Copy</button>
+            <pre class="p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded text-sm overflow-x-auto"><code>npm run dev   # development with auto-reload
 npm start     # production mode
 npm test      # run smoke tests
 npm run db:migrate  # run migrations</code></pre>
@@ -289,7 +296,7 @@ npm run db:migrate  # run migrations</code></pre>
   <section id="links" class="py-12 md:py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">Links</h2>
-      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-6 flex flex-col gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
         <a class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:shadow-sm transition" href="https://github.com/gtkrshnaaa/altarie/blob/main/docs/maindocs.md">Docs Index</a>
         <a class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:shadow-sm transition" href="https://github.com/gtkrshnaaa/altarie/blob/main/altarie/README.md">In-Repo README</a>
         <a class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:shadow-sm transition" href="https://github.com/gtkrshnaaa/altarie/blob/main/altarie/altarieguide.md">Developer Guide</a>
@@ -318,18 +325,27 @@ npm run db:migrate  # run migrations</code></pre>
       const btn = document.getElementById('menuBtn');
       if (!m || !btn) return; 
       
-      const isHidden = m.classList.toggle('hidden');
+      const isHidden = m.classList.contains('hidden');
+      
+      if (isHidden) {
+        m.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        m.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+      
       const menuIcon = btn.querySelector('.menu-icon');
       const closeIcon = btn.querySelector('.close-icon');
       
-      btn.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
-      
-      if (isHidden) {
-        menuIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
-      } else {
-        menuIcon.classList.add('hidden');
-        closeIcon.classList.remove('hidden');
+      if (menuIcon && closeIcon) {
+        if (isHidden) {
+          menuIcon.classList.add('hidden');
+          closeIcon.classList.remove('hidden');
+        } else {
+          menuIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        }
       }
     }
     // Copy buttons for quick start code blocks
