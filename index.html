@@ -8,7 +8,7 @@
   <script>
     // Tailwind config with Altarie colors (Node.js green + pink accent)
     tailwind.config = {
-      darkMode: 'media',
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -29,6 +29,20 @@
         }
       }
     }
+  </script>
+  <script>
+    // Initialize theme from localStorage or system preference
+    (function() {
+      const ls = localStorage.getItem('altarie:theme')
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      const html = document.documentElement
+      if (ls === 'dark' || (!ls && prefersDark)) html.classList.add('dark')
+      else html.classList.remove('dark')
+      window.__toggleTheme = function() {
+        const isDark = html.classList.toggle('dark')
+        localStorage.setItem('altarie:theme', isDark ? 'dark' : 'light')
+      }
+    })()
   </script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'><rect width='100%' height='100%' rx='48' fill='%23339933'/><circle cx='170' cy='76' r='20' fill='%23ff5ca8'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-size='110' fill='white' font-family='Arial'>A</text></svg>">
   <style>
@@ -55,6 +69,23 @@
           <a href="#structure" class="hover:text-brand-700 dark:hover:text-brand-400">Structure</a>
           <a href="#links" class="hover:text-brand-700 dark:hover:text-brand-400">Links</a>
           <a href="https://github.com/gtkrshnaaa/altarie/blob/main/altarie/README.md" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-brand-700 text-white hover:bg-brand-800">In-Repo Docs</a>
+          <button type="button" onclick="__toggleTheme()" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-accent-300 text-accent-700 hover:bg-accent-50 dark:text-accent-400 dark:border-accent-700/60 dark:hover:bg-accent-900/20" aria-label="Toggle theme">
+            <svg class="h-4 w-4 hidden dark:inline" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.64 13A9 9 0 1111 2.36 7 7 0 1021.64 13z"/></svg>
+            <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 16a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm10-7a1 1 0 01-1 1h-2a1 1 0 110-2h2a1 1 0 011 1zM7 12a1 1 0 01-1 1H4a1 1 0 110-2h2a1 1 0 011 1zm10.24 6.66a1 1 0 00-1.41 0l-1.41 1.41a1 1 0 101.41 1.41l1.41-1.41a1 1 0 000-1.41zM9.17 6.93a1 1 0 001.41 0L12 5.51a1 1 0 00-1.41-1.41L9.17 5.52a1 1 0 000 1.41zm9.9-1.41a1 1 0 00-1.41 0L16.25 7a1 1 0 101.41 1.41l1.41-1.41a1 1 0 000-1.41zM6.34 16.95a1 1 0 00-1.41 0L3.52 18.37a1 1 0 101.41 1.41l1.41-1.41a1 1 0 000-1.41z"/></svg>
+            <span class="hidden lg:inline">Theme</span>
+          </button>
+        </nav>
+        <button type="button" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-700" aria-label="Open menu" onclick="__toggleMenu()">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+      <div id="mobileMenu" class="md:hidden hidden py-3 border-t border-slate-200 dark:border-slate-800">
+        <nav class="flex flex-col gap-3 text-sm">
+          <a onclick="__toggleMenu()" href="#quick-start" class="hover:text-brand-700 dark:hover:text-brand-400">Quick Start</a>
+          <a onclick="__toggleMenu()" href="#features" class="hover:text-brand-700 dark:hover:text-brand-400">Features</a>
+          <a onclick="__toggleMenu()" href="#structure" class="hover:text-brand-700 dark:hover:text-brand-400">Structure</a>
+          <a onclick="__toggleMenu()" href="#links" class="hover:text-brand-700 dark:hover:text-brand-400">Links</a>
+          <button type="button" onclick="__toggleTheme(); __toggleMenu()" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-accent-300 text-accent-700 hover:bg-accent-50 dark:text-accent-400 dark:border-accent-700/60 dark:hover:bg-accent-900/20">Toggle Theme</button>
         </nav>
       </div>
     </div>
@@ -63,24 +94,36 @@
   <!-- Hero -->
   <section class="relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-accent-50 dark:from-brand-900/30 dark:via-transparent dark:to-accent-900/20"></div>
+    <!-- Decorative blobs -->
+    <div class="pointer-events-none absolute -top-12 -left-12 h-56 w-56 rounded-full bg-accent-500/25 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-16 -right-10 h-64 w-64 rounded-full bg-brand-500/20 blur-3xl"></div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="grid md:grid-cols-2 gap-10 items-center">
         <div>
           <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-slate-100 leading-tight">
             Laravel-like DX.<br />JavaScript Simplicity.
           </h1>
-          <p class="mt-4 text-lg text-slate-700 dark:text-slate-300">
+          <!-- Badges -->
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-2 rounded-full border border-accent-300 text-accent-700 px-3 py-1 text-xs dark:text-accent-400 dark:border-accent-700/60">Node 20+</span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-brand-300 text-brand-800 px-3 py-1 text-xs dark:text-brand-300 dark:border-brand-700/60">ESM</span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-1 text-xs dark:border-slate-700">Fastify</span>
+          </div>
+          <p class="mt-3 text-lg text-slate-700 dark:text-slate-300">
             Altarie.js gives you a clean, predictable structure with Fastify, Nunjucks, and better-sqlite3 — no transpilers, just ESM.
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
             <a href="#quick-start" class="px-5 py-2.5 rounded-md bg-brand-700 text-white hover:bg-brand-800 shadow-brand">Get Started</a>
             <a href="#features" class="px-5 py-2.5 rounded-md border border-accent-300 text-accent-700 hover:bg-accent-50 dark:text-accent-400 dark:border-accent-700/60 dark:hover:bg-accent-900/20">Explore Features</a>
+            <a href="https://github.com/gtkrshnaaa/altarie" class="px-5 py-2.5 rounded-md border border-slate-300 text-slate-800 hover:bg-white dark:text-slate-200 dark:border-slate-700 dark:hover:bg-[#161a16]">GitHub</a>
           </div>
         </div>
         <div class="md:pl-8">
           <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] shadow-sm overflow-hidden">
             <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0e120e] text-sm text-slate-600 dark:text-slate-300">npm-first</div>
-            <pre class="p-4 text-sm overflow-auto"><code class="language-bash">cd altarie
+            <pre class="p-4 text-sm overflow-auto bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code class="language-bash"># Scaffold a new Altarie app
+npx altarie new myapp
+cd myapp
 npm install
 cp .env.example .env
 npm run dev</code></pre>
@@ -96,22 +139,23 @@ npm run dev</code></pre>
       <h2 class="text-2xl font-semibold">Quick Start</h2>
       <ol class="mt-6 grid md:grid-cols-2 gap-6 list-decimal list-inside">
         <li class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 shadow-sm">
-          <h3 class="font-medium">Install dependencies</h3>
-          <pre class="mt-3 p-3 bg-slate-900 text-slate-100 rounded"><code>cd altarie
-npm install</code></pre>
+          <h3 class="font-medium">Create a new app (npx)</h3>
+          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code>npx altarie new myapp
+cd myapp</code></pre>
         </li>
-        <li class="rounded-lg border bg-white p-5 shadow-sm">
-          <h3 class="font-medium">Configure environment</h3>
-          <pre class="mt-3 p-3 bg-slate-900 text-slate-100 rounded"><code>cp .env.example .env
+        <li class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 shadow-sm">
+          <h3 class="font-medium">Install & configure</h3>
+          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code>npm install
+cp .env.example .env
 # edit .env as needed (APP_PORT, etc.)</code></pre>
         </li>
-        <li class="rounded-lg border bg-white p-5 shadow-sm">
+        <li class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 shadow-sm">
           <h3 class="font-medium">Run in development</h3>
-          <pre class="mt-3 p-3 bg-slate-900 text-slate-100 rounded"><code>npm run dev</code></pre>
+          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code>npm run dev</code></pre>
         </li>
-        <li class="rounded-lg border bg-white p-5 shadow-sm">
+        <li class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 shadow-sm">
           <h3 class="font-medium">Open Devtools</h3>
-          <pre class="mt-3 p-3 bg-slate-900 text-slate-100 rounded"><code>/_altarie/routes
+          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code>/_altarie/routes
 /_altarie/env</code></pre>
         </li>
       </ol>
@@ -121,31 +165,31 @@ npm install</code></pre>
   <!-- Features -->
   <section id="features" class="py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold">Features</h2>
+      <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Features</h2>
       <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16]">
+        <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Fastify Core</h3>
-          <p class="mt-2 text-slate-600 text-sm">Modern HTTP server with great performance and plugin ecosystem.</p>
+          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm">Modern HTTP server with great performance and plugin ecosystem.</p>
         </div>
-        <div class="rounded-lg border p-5 bg-white">
+        <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Nunjucks Templates</h3>
-          <p class="mt-2 text-slate-600 text-sm">Blade-like views with `reply.render()` convenience.</p>
+          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm">Blade-like views with <code>reply.render()</code> convenience.</p>
         </div>
-        <div class="rounded-lg border p-5 bg-white">
+        <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">SQLite by default</h3>
-          <p class="mt-2 text-slate-600 text-sm">Embedded DB via better-sqlite3, simple and stable for local dev.</p>
+          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm">Embedded DB via better-sqlite3, simple and stable for local dev.</p>
         </div>
-        <div class="rounded-lg border p-5 bg-white">
+        <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Autoloaded Routes</h3>
-          <p class="mt-2 text-slate-600 text-sm">Drop files in <code>routes/</code> and they are registered automatically.</p>
+          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm">Drop files in <code>routes/</code> and they are registered automatically.</p>
         </div>
-        <div class="rounded-lg border p-5 bg-white">
+        <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Youch Error Pages</h3>
-          <p class="mt-2 text-slate-600 text-sm">Pretty error pages in development, compact JSON in production.</p>
+          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm">Pretty error pages in development, compact JSON in production.</p>
         </div>
-        <div class="rounded-lg border p-5 bg-white">
+        <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Security & CORS</h3>
-          <p class="mt-2 text-slate-600 text-sm">Helmet and CORS with safe defaults baked in.</p>
+          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm">Helmet and CORS with safe defaults baked in.</p>
         </div>
       </div>
     </div>
@@ -154,11 +198,11 @@ npm install</code></pre>
   <!-- Structure -->
   <section id="structure" class="py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold">Project Structure</h2>
+      <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Project Structure</h2>
       <div class="mt-6 grid md:grid-cols-2 gap-6">
-        <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5">
+        <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Inside <code>altarie/</code></h3>
-          <ul class="mt-3 text-sm text-slate-700 space-y-1 list-disc list-inside">
+          <ul class="mt-3 text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc list-inside">
             <li><code>server.js</code> — entry point</li>
             <li><code>bootstrap/app.js</code> — kernel (env, view, routes, errors, providers)</li>
             <li><code>config/</code> — app, view, database configuration</li>
@@ -169,9 +213,9 @@ npm install</code></pre>
             <li><code>tests/</code> — smoke tests</li>
           </ul>
         </div>
-        <div class="rounded-lg border bg-white p-5">
+        <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Commands</h3>
-          <pre class="mt-3 p-3 bg-slate-900 text-slate-100 rounded text-sm"><code>npm run dev   # development with auto-reload
+          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded text-sm"><code>npm run dev   # development with auto-reload
 npm start     # production mode
 npm test      # run smoke tests
 npm run db:migrate  # run migrations</code></pre>
@@ -183,7 +227,7 @@ npm run db:migrate  # run migrations</code></pre>
   <!-- Links -->
   <section id="links" class="py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold">Links</h2>
+      <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Links</h2>
       <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <a class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:shadow-sm transition" href="https://github.com/gtkrshnaaa/altarie/blob/main/docs/maindocs.md">Docs Index</a>
         <a class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:shadow-sm transition" href="https://github.com/gtkrshnaaa/altarie/blob/main/altarie/README.md">In-Repo README</a>
@@ -199,10 +243,19 @@ npm run db:migrate  # run migrations</code></pre>
 
   <footer class="py-10 text-center text-sm text-slate-500 dark:text-slate-400">
     <p>&copy; <span id="year"></span> Altarie — All rights reserved.</p>
+    <div class="mt-2 text-xs">
+      <a class="text-accent-600 hover:underline dark:text-accent-400" href="https://github.com/gtkrshnaaa/altarie">GitHub</a>
+      <span class="mx-2">•</span>
+      <a class="text-brand-700 hover:underline dark:text-brand-300" href="#quick-start">Quick Start</a>
+    </div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    function __toggleMenu(){
+      const m = document.getElementById('mobileMenu');
+      if (!m) return; m.classList.toggle('hidden');
+    }
   </script>
 </body>
 </html>
