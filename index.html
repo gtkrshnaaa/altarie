@@ -51,6 +51,9 @@
   <style>
     /* Improve code block readability */
     pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    /* Mobile-friendly code scrolling */
+    pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    pre code { white-space: pre; display: block; }
   </style>
 </head>
 <body class="bg-white dark:bg-[#0e120e] text-slate-900 dark:text-slate-100">
@@ -119,7 +122,9 @@
         <div class="md:pl-8">
           <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] shadow-sm overflow-hidden">
             <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0e120e] text-sm text-slate-600 dark:text-slate-300">Routing (Altarie)</div>
-            <pre class="p-4 text-sm overflow-auto bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code class="language-js">// routes/web.js
+            <div class="relative">
+              <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
+              <pre class="p-4 text-sm bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code class="language-js">// routes/web.js
 export default async function (app) {
   const preAuth = app.mw.resolve(['auth'])
 
@@ -131,7 +136,8 @@ export default async function (app) {
 
   app.get('/api/health', async () => ({ status: 'ok' }))
 }
-</code></pre>
+              </code></pre>
+            </div>
           </div>
         </div>
       </div>
@@ -142,26 +148,50 @@ export default async function (app) {
   <section id="quick-start" class="py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl font-semibold">Quick Start</h2>
-      <ol class="mt-6 grid md:grid-cols-2 gap-6 list-decimal list-inside">
-        <li class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 shadow-sm">
-          <h3 class="font-medium">Create a new app (npx)</h3>
-          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code>npx altarie new myapp
+      <ol class="mt-6 grid gap-4 md:gap-6 md:grid-cols-2">
+        <li class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-4 sm:p-5 shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-700 text-white text-xs">1</span>
+            <h3 class="font-semibold text-base sm:text-lg">Create a new app (npx)</h3>
+          </div>
+          <div class="mt-3 relative">
+            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
+            <pre class="mt-0 p-3 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code>npx altarie new myapp
 cd myapp</code></pre>
+          </div>
         </li>
-        <li class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 shadow-sm">
-          <h3 class="font-medium">Install & configure</h3>
-          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code>npm install
+        <li class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-4 sm:p-5 shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-700 text-white text-xs">2</span>
+            <h3 class="font-semibold text-base sm:text-lg">Install & configure</h3>
+          </div>
+          <div class="mt-3 relative">
+            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
+            <pre class="mt-0 p-3 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code>npm install
 cp .env.example .env
 # edit .env as needed (APP_PORT, etc.)</code></pre>
+          </div>
         </li>
-        <li class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 shadow-sm">
-          <h3 class="font-medium">Run in development</h3>
-          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code>npm run dev</code></pre>
+        <li class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-4 sm:p-5 shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-700 text-white text-xs">3</span>
+            <h3 class="font-semibold text-base sm:text-lg">Run in development</h3>
+          </div>
+          <div class="mt-3 relative">
+            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
+            <pre class="mt-0 p-3 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code>npm run dev</code></pre>
+          </div>
         </li>
-        <li class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 shadow-sm">
-          <h3 class="font-medium">Open Devtools</h3>
-          <pre class="mt-3 p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded"><code>/_altarie/routes
+        <li class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-4 sm:p-5 shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-700 text-white text-xs">4</span>
+            <h3 class="font-semibold text-base sm:text-lg">Open Devtools</h3>
+          </div>
+          <div class="mt-3 relative">
+            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
+            <pre class="mt-0 p-3 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code>/_altarie/routes
 /_altarie/env</code></pre>
+          </div>
         </li>
       </ol>
     </div>
@@ -261,6 +291,19 @@ npm run db:migrate  # run migrations</code></pre>
       const m = document.getElementById('mobileMenu');
       if (!m) return; m.classList.toggle('hidden');
     }
+    // Copy buttons for quick start code blocks
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pre = btn.nextElementSibling;
+        if (!pre) return;
+        const code = pre.innerText.trim();
+        navigator.clipboard.writeText(code).then(() => {
+          const old = btn.textContent;
+          btn.textContent = 'Copied';
+          setTimeout(() => (btn.textContent = old), 1200);
+        });
+      });
+    });
   </script>
 </body>
 </html>
