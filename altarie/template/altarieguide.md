@@ -13,19 +13,20 @@ A practical guide to building apps with Altarie.js — a Laravel-like developer 
 1. Getting Started
 2. Project Structure
 3. Environment & Configuration
-4. Routing
-5. Controllers
-6. Views (Nunjucks)
-7. Middleware
-8. Providers
-9. Database & Migrations (better-sqlite3)
-10. Testing
-11. Error Handling
-12. Static Assets
-13. Development Tools
-14. Deployment
-15. Patterns & Conventions
-16. FAQ & Troubleshooting
+4. Bootstrapping (Laravel-like Builder)
+5. Routing (Explicit vs Autoload)
+6. Controllers
+7. Views (Nunjucks)
+8. Middleware (Aliases, Global, Groups)
+9. Exceptions (Error & Not Found)
+10. Providers
+11. Database & Migrations (better-sqlite3)
+12. Testing
+13. Static Assets
+14. Development Tools
+15. Deployment
+16. Patterns & Conventions
+17. FAQ & Troubleshooting
 
 ---
 
@@ -121,7 +122,51 @@ Configuration files:
 
 ---
 
-## 4) Routing
+## 4) Bootstrapping (Laravel-like Builder)
+
+`bootstrap/app.js` now uses a fluent API similar to Laravel's `bootstrap/app.php`.
+
+```javascript
+// bootstrap/app.js
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { Application } from './config.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+export async function createApp() {
+  return Application
+    .configure({ basePath: path.join(__dirname, '..') })
+    .withRouting({
+      web: path.join(__dirname, '../routes/web.js'),
+      api: path.join(__dirname, '../routes/api.js'),
+      health: '/up'
+    })
+    .withMiddleware((mw) => {
+      // Aliases
+      // mw.alias({ 'auth': yourAuthMiddleware })
+
+      // Global (runs on every request)
+      // mw.append(yourGlobalMiddleware)
+
+      // Groups (optional)
+      // mw.group('web', [csrfMiddleware, sessionMiddleware])
+      // mw.group('api', [rateLimitMiddleware])
+    })
+    .withExceptions((ex) => {
+      // ex.handler((error, request, reply) => { /* custom */ })
+      // ex.notFound('errors/404.njk')
+    })
+    .create()
+}
+```
+
+Notes:
+- `.withRouting()` may be omitted to use autoload from `routes/`.
+- `health` adds `GET /up` returning simple JSON.
+
+## 5) Routing (Explicit vs Autoload)
 
 Routes are defined as ESM modules under `routes/` and auto-registered. Each file should export a default async function that receives the Fastify instance.
 
@@ -136,7 +181,8 @@ export default async function (app) {
 
   app.get('/', async (request, reply) => home.index(request, reply))
 
-  app.get('/dashboard', { preHandler: auth }, async (request, reply) => {
+  const preAuth = app.mw.resolve(['auth'])
+  app.get('/dashboard', { preHandler: preAuth }, async (request, reply) => {
     return reply.render('dashboard.njk', {
       env: process.env.NODE_ENV || 'development'
     })
@@ -192,27 +238,20 @@ Common files:
 
 ---
 
-## 7) Middleware
+## 8) Middleware (Aliases, Global, Groups)
 
-Use Fastify hooks and `preHandler` to compose middleware.
+Configure in builder and/or `bootstrap/config.js`. Use aliases for route-level DX, append for global middleware, and groups for reusable stacks.
 
-```js
-// app/middleware/auth.js
-export async function auth(request, reply) {
-  const authorized = true // Replace with real check
-  if (!authorized) {
-    return reply.status(401).send({ message: 'Unauthorized' })
-  }
-}
-```
+```javascript
+// In builder
+mw.alias({ 'auth': auth, 'auth.admin': adminAuth })
+mw.append(requestLogger)
+mw.group('web', [csrf, session])
+mw.group('api', [rateLimit])
 
-Attach in routes via options: `{ preHandler: auth }` or arrays.
-
----
-
-## 8) Providers
-
-Providers register cross-cutting services on the Fastify instance.
+// In routes
+const pre = app.mw.resolve(['auth', someMiddleware])
+app.get('/secure', { preHandler: pre }, handler)
 
 ```js
 // app/providers/AppProvider.js
@@ -255,9 +294,9 @@ npm test
 
 ---
 
-## 11) Error Handling
+## 9) Exceptions (Error & Not Found)
 
-`core/error.js` provides a centralized error handler using Youch in development.
+Use `.withExceptions()` to override error and not-found. Default uses `core/error.js` (Youch in dev) and renders `errors/404.njk`.
 
 - If the client accepts `text/html` and `NODE_ENV=development`, errors are rendered as HTML.
 - Otherwise, JSON payloads are returned.
@@ -274,7 +313,7 @@ npm test
 
 ---
 
-## 13) Development Tools
+## 14) Development Tools
 
 Development-only endpoints (enabled when `NODE_ENV=development`):
 
@@ -285,7 +324,7 @@ These are implemented in `core/devtools.js` via Fastify hooks.
 
 ---
 
-## 14) Deployment
+## 15) Deployment
 
 General tips:
 
@@ -296,7 +335,7 @@ General tips:
 
 ---
 
-## 15) Patterns & Conventions
+## 16) Patterns & Conventions
 
 - ESM everywhere (no transpilers).
 - Convention-over-configuration folder layout.
@@ -308,7 +347,7 @@ General tips:
 
 ---
 
-## 16) FAQ & Troubleshooting
+## 17) FAQ & Troubleshooting
 
 - Q: Fastify fails to start (EADDRINUSE)?
   - A: The port is in use. Change `APP_PORT` in `.env` or terminate the running process.
