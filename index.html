@@ -52,8 +52,11 @@
     /* Improve code block readability */
     pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
     /* Mobile-friendly code scrolling */
-    pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    pre code { white-space: pre; display: block; }
+    pre { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+    pre code { white-space: pre; display: block; word-break: break-all; }
+    /* Prevent horizontal scroll */
+    html, body { overflow-x: hidden; }
+    * { max-width: 100%; }
   </style>
 </head>
 <body class="bg-white dark:bg-[#0e120e] text-slate-900 dark:text-slate-100">
@@ -108,33 +111,33 @@
     <!-- Decorative blobs -->
     <div class="pointer-events-none absolute -top-12 -left-12 h-56 w-56 rounded-full bg-accent-500/25 blur-3xl"></div>
     <div class="pointer-events-none absolute -bottom-16 -right-10 h-64 w-64 rounded-full bg-brand-500/20 blur-3xl"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
       <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-slate-100 leading-tight">
+        <div class="max-w-lg md:max-w-none">
+          <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-slate-100 leading-tight">
             Laravel-like DX.<br />JavaScript Simplicity.
           </h1>
           <!-- Badges -->
-          <div class="mt-4 flex flex-wrap gap-2">
-            <span class="inline-flex items-center gap-2 rounded-full border border-accent-300 text-accent-700 px-3 py-1 text-xs dark:text-accent-400 dark:border-accent-700/60">Node 20+</span>
-            <span class="inline-flex items-center gap-2 rounded-full border border-brand-300 text-brand-800 px-3 py-1 text-xs dark:text-brand-300 dark:border-brand-700/60">ESM</span>
-            <span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-1 text-xs dark:border-slate-700">Fastify</span>
+          <div class="mt-3 sm:mt-4 flex flex-wrap gap-1.5 sm:gap-2">
+            <span class="inline-flex items-center gap-1 rounded-full border border-accent-300 text-accent-700 px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs dark:text-accent-400 dark:border-accent-700/60">Node 20+</span>
+            <span class="inline-flex items-center gap-1 rounded-full border border-brand-300 text-brand-800 px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs dark:text-brand-300 dark:border-brand-700/60">ESM</span>
+            <span class="inline-flex items-center gap-1 rounded-full border border-slate-300 px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs dark:border-slate-700">Fastify</span>
           </div>
-          <p class="mt-3 text-lg text-slate-700 dark:text-slate-300">
+          <p class="mt-3 text-base sm:text-lg text-slate-700 dark:text-slate-300">
             Altarie.js gives you a clean, predictable structure with Fastify, Nunjucks, and better-sqlite3 — no transpilers, just ESM.
           </p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a href="#quick-start" class="w-full sm:w-auto text-center px-5 py-2.5 rounded-md bg-brand-700 text-white hover:bg-brand-800 shadow-brand">Get Started</a>
-            <a href="#features" class="w-full sm:w-auto text-center px-5 py-2.5 rounded-md border border-accent-300 text-accent-700 bg-accent-50 hover:bg-accent-100 dark:text-accent-400 dark:border-accent-700/60 dark:bg-accent-900/10 dark:hover:bg-accent-900/20">Explore Features</a>
-            <a href="https://github.com/gtkrshnaaa/altarie" class="w-full sm:w-auto text-center px-5 py-2.5 rounded-md border border-slate-300 text-slate-800 bg-slate-100 hover:bg-white dark:text-slate-200 dark:border-slate-700 dark:bg-[#111411] dark:hover:bg-[#161a16]">GitHub</a>
+          <div class="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <a href="#quick-start" class="text-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-md bg-brand-700 text-white hover:bg-brand-800 shadow-brand text-sm sm:text-base">Get Started</a>
+            <a href="#features" class="text-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-md border border-accent-300 text-accent-700 bg-accent-50 hover:bg-accent-100 dark:text-accent-400 dark:border-accent-700/60 dark:bg-accent-900/10 dark:hover:bg-accent-900/20 text-sm sm:text-base">Explore Features</a>
+            <a href="https://github.com/gtkrshnaaa/altarie" class="text-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-md border border-slate-300 text-slate-800 bg-slate-100 hover:bg-white dark:text-slate-200 dark:border-slate-700 dark:bg-[#111411] dark:hover:bg-[#161a16] text-sm sm:text-base">GitHub</a>
           </div>
         </div>
-        <div class="mt-6 md:mt-0 md:pl-8">
+        <div class="mt-8 md:mt-0 md:pl-8">
           <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] shadow-sm overflow-hidden">
-            <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0e120e] text-sm text-slate-600 dark:text-slate-300">Routing (Altarie)</div>
+            <div class="p-3 sm:p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0e120e] text-xs sm:text-sm text-slate-600 dark:text-slate-300">Routing (Altarie)</div>
             <div class="relative">
-              <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
-              <pre class="p-4 text-sm bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code class="language-js">// routes/web.js
+              <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs text-slate-700 dark:text-slate-300">Copy</button>
+              <pre class="p-3 sm:p-4 text-xs sm:text-sm bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code class="language-js">// routes/web.js
 export default async function (app) {
   const preAuth = app.mw.resolve(['auth'])
 
@@ -157,12 +160,12 @@ export default async function (app) {
   <!-- Quick Start -->
   <section id="quick-start" class="py-12 md:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold">Quick Start</h2>
+      <h2 class="text-xl sm:text-2xl font-semibold">Quick Start</h2>
       <ol class="mt-6 grid gap-4 md:gap-6 md:grid-cols-2">
         <li class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-4 sm:p-5 shadow-sm">
           <div class="flex items-center gap-3">
             <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-700 text-white text-xs">1</span>
-            <h3 class="font-semibold text-base sm:text-lg">Create a new app (npx)</h3>
+            <h3 class="font-semibold text-sm sm:text-base lg:text-lg">Create a new app (npx)</h3>
           </div>
           <div class="mt-3 relative">
             <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
@@ -173,11 +176,11 @@ cd myapp</code></pre>
         <li class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-4 sm:p-5 shadow-sm">
           <div class="flex items-center gap-3">
             <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-700 text-white text-xs">2</span>
-            <h3 class="font-semibold text-base sm:text-lg">Install & configure</h3>
+            <h3 class="font-semibold text-sm sm:text-base lg:text-lg">Install & configure</h3>
           </div>
           <div class="mt-3 relative">
-            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
-            <pre class="mt-0 p-3 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code>npm install
+            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs text-slate-700 dark:text-slate-300">Copy</button>
+            <pre class="mt-0 p-2 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto text-xs sm:text-sm"><code>npm install
 cp .env.example .env
 # edit .env as needed (APP_PORT, etc.)</code></pre>
           </div>
@@ -185,21 +188,21 @@ cp .env.example .env
         <li class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-4 sm:p-5 shadow-sm">
           <div class="flex items-center gap-3">
             <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-700 text-white text-xs">3</span>
-            <h3 class="font-semibold text-base sm:text-lg">Run in development</h3>
+            <h3 class="font-semibold text-sm sm:text-base lg:text-lg">Run in development</h3>
           </div>
           <div class="mt-3 relative">
-            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
-            <pre class="mt-0 p-3 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code>npm run dev</code></pre>
+            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs text-slate-700 dark:text-slate-300">Copy</button>
+            <pre class="mt-0 p-2 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto text-xs sm:text-sm"><code>npm run dev</code></pre>
           </div>
         </li>
         <li class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-4 sm:p-5 shadow-sm">
           <div class="flex items-center gap-3">
             <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-700 text-white text-xs">4</span>
-            <h3 class="font-semibold text-base sm:text-lg">Open Devtools</h3>
+            <h3 class="font-semibold text-sm sm:text-base lg:text-lg">Open Devtools</h3>
           </div>
           <div class="mt-3 relative">
-            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-300">Copy</button>
-            <pre class="mt-0 p-3 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto"><code>/_altarie/routes
+            <button type="button" class="copy-btn absolute right-2 top-2 rounded-md border border-slate-300 dark:border-slate-700 px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs text-slate-700 dark:text-slate-300">Copy</button>
+            <pre class="mt-0 p-2 sm:p-3 bg-slate-100 dark:bg-[#111411] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded overflow-x-auto text-xs sm:text-sm"><code>/_altarie/routes
 /_altarie/env</code></pre>
           </div>
         </li>
@@ -210,7 +213,7 @@ cp .env.example .env
   <!-- Features -->
   <section id="features" class="py-12 md:py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Features</h2>
+      <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">Features</h2>
       <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Fastify Core</h3>
@@ -243,7 +246,7 @@ cp .env.example .env
   <!-- Structure -->
   <section id="structure" class="py-12 md:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Project Structure</h2>
+      <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">Project Structure</h2>
       <div class="mt-6 grid md:grid-cols-2 gap-6">
         <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] p-5 hover:ring-1 hover:ring-accent-500/30 transition">
           <h3 class="font-medium">Inside <code>altarie/</code></h3>
@@ -272,7 +275,7 @@ npm run db:migrate  # run migrations</code></pre>
   <!-- Links -->
   <section id="links" class="py-12 md:py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Links</h2>
+      <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">Links</h2>
       <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <a class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:shadow-sm transition" href="https://github.com/gtkrshnaaa/altarie/blob/main/docs/maindocs.md">Docs Index</a>
         <a class="rounded-lg border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-[#161a16] hover:shadow-sm transition" href="https://github.com/gtkrshnaaa/altarie/blob/main/altarie/README.md">In-Repo README</a>
@@ -299,7 +302,22 @@ npm run db:migrate  # run migrations</code></pre>
     document.getElementById('year').textContent = new Date().getFullYear();
     function __toggleMenu(){
       const m = document.getElementById('mobileMenu');
-      if (!m) return; m.classList.toggle('hidden');
+      const btn = document.getElementById('menuBtn');
+      if (!m || !btn) return; 
+      
+      const isHidden = m.classList.toggle('hidden');
+      const menuIcon = btn.querySelector('.menu-icon');
+      const closeIcon = btn.querySelector('.close-icon');
+      
+      btn.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
+      
+      if (isHidden) {
+        menuIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      } else {
+        menuIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      }
     }
     // Copy buttons for quick start code blocks
     document.querySelectorAll('.copy-btn').forEach(btn => {
