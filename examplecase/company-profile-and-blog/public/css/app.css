@@ -46,7 +46,7 @@ body {
 a { color: var(--brand); text-decoration: none; }
 a:hover { color: var(--brand-600); text-decoration: underline; }
 
-.container { max-width: 70rem; margin: 0 auto; padding: 2rem; }
+.container { max-width: 70rem; margin: 0 auto; padding: 1.25rem; }
 
 /* Header */
 .site-header {
@@ -89,6 +89,31 @@ main { padding: 2rem; }
 .hero { padding: 2rem; }
 .hero h1 { font-size: 2.25rem; line-height: 1.15; margin: 0 0 .5rem; }
 .hero p { margin: 0.25rem 0; color: var(--muted); }
+
+/* Utilities */
+.muted { color: var(--muted); }
+.divider { border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+/* Grids */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.list { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.item { padding: 1rem; }
+
+@media (min-width: 640px) {
+  .container { padding: 2rem; }
+  .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+
+/* Features list */
+.features { margin: .25rem 0 1rem; padding-left: 1.25rem; }
+.features li { margin: .15rem 0; color: var(--muted); }
 
 /* Buttons */
 .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1rem; border-radius: 10px; font-weight: 600; }

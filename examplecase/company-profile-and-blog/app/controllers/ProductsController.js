@@ -1,8 +1,7 @@
-// HomeController for altarie.js (company profile demo)
+// ProductsController for Altarie Studio demo
 // All program comments should use English.
-export class HomeController {
+export class ProductsController {
   constructor() {
-    // Company static info
     this.company = {
       name: 'Altarie Studio',
       tagline: 'Laravel-like DX. JavaScript Simplicity.',
@@ -10,7 +9,6 @@ export class HomeController {
     }
   }
 
-  // Build base context for views
   ctx(request, extra = {}) {
     const currentYear = new Date().getFullYear()
     return {
@@ -24,13 +22,14 @@ export class HomeController {
 
   async index(request, reply) {
     const { Product } = await import('../models/Product.js')
-    const { Post } = await import('../models/Post.js')
-    const products = Product.recent(2)
-    const posts = Post.recent(2)
-    return reply.render('home.njk', this.ctx(request, { products, posts }))
+    const products = Product.all()
+    return reply.render('products.njk', this.ctx(request, { products }))
   }
 
-  async about(request, reply) {
-    return reply.render('about.njk', this.ctx(request))
+  async show(request, reply) {
+    const { Product } = await import('../models/Product.js')
+    const product = Product.findBySlug(request.params.slug)
+    if (!product) return reply.code(404).render('errors/404.njk', this.ctx(request, { url: request.url }))
+    return reply.render('product.njk', this.ctx(request, { product }))
   }
 }

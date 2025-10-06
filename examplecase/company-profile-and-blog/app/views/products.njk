@@ -1,0 +1,20 @@
+{% extends "layouts/base.njk" %}
+{% block title %}Products — Altarie Studio{% endblock %}
+{% block content %}
+  <h1>Products</h1>
+  <p>Tools and starters built with Altarie.js.</p>
+  <div class="grid">
+    {% for p in products %}
+      <article class="card item">
+        <h3 style="margin:.25rem 0 0">{{ p.name }}</h3>
+        <p class="muted">{{ p.summary }}</p>
+        {% if p.features %}
+          <ul class="features">
+            {% for f in p.features %}<li>{{ f }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+        <a class="btn btn-primary" href="/products/{{ p.slug }}">View details</a>
+      </article>
+    {% endfor %}
+  </div>
+{% endblock %}

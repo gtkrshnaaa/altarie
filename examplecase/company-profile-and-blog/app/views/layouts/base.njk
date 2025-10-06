@@ -9,11 +9,16 @@
   <body>
     <!-- Header with brand badge (Node.js green + pink accent) -->
     <header class="site-header">
-      <nav class="site-nav container">
+      <nav class="site-nav container" style="justify-content:space-between">
         <a class="brand" href="/">
           <span class="brand-badge" aria-hidden="true"></span>
-          <span class="brand-name">Altarie<span class="brand-dot">.js</span></span>
+          <span class="brand-name">Altarie <span class="brand-dot">Studio</span></span>
         </a>
+        <div class="nav-links" style="display:flex; gap:1rem; align-items:center;">
+          <a href="/products" class="nav-link{% if currentUrl and currentUrl.startswith('/products') %} is-active{% endif %}"{% if currentUrl and currentUrl.startswith('/products') %} aria-current="page"{% endif %}>Products</a>
+          <a href="/blog" class="nav-link{% if currentUrl and currentUrl.startswith('/blog') %} is-active{% endif %}"{% if currentUrl and currentUrl.startswith('/blog') %} aria-current="page"{% endif %}>Blog</a>
+          <a href="/about" class="nav-link{% if currentUrl == '/about' %} is-active{% endif %}"{% if currentUrl == '/about' %} aria-current="page"{% endif %}>About</a>
+        </div>
       </nav>
     </header>
 
@@ -25,7 +30,7 @@
 
     <footer class="site-footer">
       <div class="container">
-        <small>© {{ (new Date()).getFullYear() if false }} Altarie · Node.js green with pink accent</small>
+        <small>© {{ currentYear or  ("now" | date('YYYY')) }} Altarie Studio · Node.js green with pink accent</small>
       </div>
     </footer>
   </body>

@@ -1,0 +1,13 @@
+{% extends "layouts/base.njk" %}
+{% block title %}{{ product.name }} — Altarie Studio{% endblock %}
+{% block content %}
+  <a href="/products" class="muted" style="display:inline-block;margin-bottom:.5rem">← Back to products</a>
+  <h1>{{ product.name }}</h1>
+  <p class="muted">{{ product.summary }}</p>
+  {% if product.features %}
+    <h3>Key features</h3>
+    <ul class="features">
+      {% for f in product.features %}<li>{{ f }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

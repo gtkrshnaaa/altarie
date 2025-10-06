@@ -1,0 +1,10 @@
+{% extends "layouts/base.njk" %}
+{% block title %}{{ post.title }} — Altarie Studio{% endblock %}
+{% block content %}
+  <a href="/blog" class="muted" style="display:inline-block;margin-bottom:.5rem">← Back to blog</a>
+  <h1>{{ post.title }}</h1>
+  <p class="muted">Altarie Studio · Blog</p>
+  <div style="margin-top:1rem">
+    <p>{{ post.body }}</p>
+  </div>
+{% endblock %}

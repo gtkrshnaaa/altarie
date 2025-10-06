@@ -1,13 +1,36 @@
 {% extends "layouts/base.njk" %}
 
-{% block title %}Altarie — Home{% endblock %}
+{% block title %}Altarie Studio — Build with Altarie{% endblock %}
 
 {% block content %}
-  <h1>Build with Altarie</h1>
-  <p>Laravel experience, JavaScript simplicity — Node.js green with a pink accent.</p>
-  <p>Environment: <code>{{ env }}</code></p>
+  <h1>{{ company.name }}</h1>
+  <p class="muted">{{ company.tagline }}</p>
+  <p>{{ company.description }}</p>
   <div style="margin-top:1rem; display:flex; gap:.75rem; flex-wrap:wrap;">
-    <a class="btn btn-primary" href="/docs">Get Started</a>
-    <a class="btn btn-outline" href="/_altarie/routes">View Routes</a>
+    <a class="btn btn-primary" href="/products">Explore Products</a>
+    <a class="btn btn-outline" href="/blog">Read Blog</a>
+  </div>
+
+  <hr class="divider" />
+
+  <h2>Featured Products</h2>
+  <div class="grid">
+    {% for p in products %}
+      <article class="card item">
+        <h3 style="margin:.25rem 0 0">{{ p.name }}</h3>
+        <p class="muted">{{ p.summary }}</p>
+        <a class="btn btn-primary" href="/products/{{ p.slug }}">View details</a>
+      </article>
+    {% endfor %}
+  </div>
+
+  <h2 style="margin-top:2rem">Recent Posts</h2>
+  <div class="list">
+    {% for post in posts %}
+      <article class="card item" style="padding:1rem 1.25rem">
+        <h3 style="margin:.25rem 0 .25rem"><a href="/blog/{{ post.slug }}">{{ post.title }}</a></h3>
+        <p class="muted">{{ post.excerpt }}</p>
+      </article>
+    {% endfor %}
   </div>
 {% endblock %}

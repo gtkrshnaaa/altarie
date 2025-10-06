@@ -1,17 +1,24 @@
-// Web routes for altarie.js
+// Web routes for company profile demo (Altarie Studio)
 import { HomeController } from '../app/controllers/HomeController.js'
+import { ProductsController } from '../app/controllers/ProductsController.js'
+import { BlogController } from '../app/controllers/BlogController.js'
 
 export default async function (app) {
-  const home = new HomeController()
+  const c = new HomeController()
+  const products = new ProductsController()
+  const blog = new BlogController()
 
-  app.get('/', async (request, reply) => home.index(request, reply))
+  // Home / landing
+  app.get('/', async (request, reply) => c.index(request, reply))
 
-  // Protected route example
-  // Use Laravel-like alias resolver defined in bootstrap/app.js via app.mw.resolve
-  const preAuth = app.mw.resolve(['auth'])
-  app.get('/dashboard', { preHandler: preAuth }, async (request, reply) => {
-    return reply.render('dashboard.njk', {
-      env: process.env.NODE_ENV || 'development'
-    })
-  })
+  // Company pages
+  app.get('/about', async (request, reply) => c.about(request, reply))
+
+  // Products
+  app.get('/products', async (request, reply) => products.index(request, reply))
+  app.get('/products/:slug', async (request, reply) => products.show(request, reply))
+
+  // Blog
+  app.get('/blog', async (request, reply) => blog.index(request, reply))
+  app.get('/blog/:slug', async (request, reply) => blog.show(request, reply))
 }
