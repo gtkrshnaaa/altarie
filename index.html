@@ -71,13 +71,23 @@
           <a href="#links" class="hover:text-brand-700 dark:hover:text-brand-400">Links</a>
           <a href="https://github.com/gtkrshnaaa/altarie/blob/main/altarie/README.md" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-brand-700 text-white hover:bg-brand-800">In-Repo Docs</a>
           <button type="button" onclick="__toggleTheme()" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-accent-300 text-accent-700 hover:bg-accent-50 dark:text-accent-400 dark:border-accent-700/60 dark:hover:bg-accent-900/20" aria-label="Toggle theme">
-            <svg class="h-4 w-4 hidden dark:inline" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.64 13A9 9 0 1111 2.36 7 7 0 1021.64 13z"/></svg>
-            <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 16a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm10-7a1 1 0 01-1 1h-2a1 1 0 110-2h2a1 1 0 011 1zM7 12a1 1 0 01-1 1H4a1 1 0 110-2h2a1 1 0 011 1zm10.24 6.66a1 1 0 00-1.41 0l-1.41 1.41a1 1 0 101.41 1.41l1.41-1.41a1 1 0 000-1.41zM9.17 6.93a1 1 0 001.41 0L12 5.51a1 1 0 00-1.41-1.41L9.17 5.52a1 1 0 000 1.41zm9.9-1.41a1 1 0 00-1.41 0L16.25 7a1 1 0 101.41 1.41l1.41-1.41a1 1 0 000-1.41zM6.34 16.95a1 1 0 00-1.41 0L3.52 18.37a1 1 0 101.41 1.41l1.41-1.41a1 1 0 000-1.41z"/></svg>
+            <!-- Moon (dark icon shown in dark mode) -->
+            <svg class="h-4 w-4 hidden dark:inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <!-- Sun (light icon shown in light mode) -->
+            <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
             <span class="hidden lg:inline">Theme</span>
           </button>
         </nav>
-        <button id="menuBtn" type="button" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border border-slate-300 dark:border-slate-700" aria-label="Open menu" aria-expanded="false" onclick="__toggleMenu()">
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <button id="menuBtn" type="button" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300" aria-label="Open menu" aria-expanded="false" onclick="__toggleMenu()">
+          <!-- Hamburger -->
+          <svg class="h-5 w-5 menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <!-- Close (hidden by default) -->
+          <svg class="h-5 w-5 close-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
       <div id="mobileMenu" class="md:hidden hidden py-3 border-t border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0e120e]/90 backdrop-blur-sm">
