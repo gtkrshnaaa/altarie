@@ -56,12 +56,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <a href="#" class="inline-flex items-center gap-2 font-extrabold text-slate-900 dark:text-slate-100">
-          <span class="relative inline-flex h-8 w-8 items-center justify-center rounded-lg shadow-brand" style="background:
-            radial-gradient(35% 35% at 30% 30%, #ff5ca8 0%, transparent 100%),
-            radial-gradient(40% 40% at 65% 60%, #e44f95 0%, transparent 100%),
-            radial-gradient(100% 100% at 50% 50%, #339933 0%, #256d26 100%)
-          "></span>
-          <span><span class="text-brand-800 dark:text-brand-400">Altarie</span><span class="text-accent-500">.js</span></span>
+          <span class="uppercase tracking-widest text-black dark:text-white">ALTARIE</span>
         </a>
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a href="#quick-start" class="hover:text-brand-700 dark:hover:text-brand-400">Quick Start</a>
@@ -75,17 +70,17 @@
             <span class="hidden lg:inline">Theme</span>
           </button>
         </nav>
-        <button type="button" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-700" aria-label="Open menu" onclick="__toggleMenu()">
+        <button id="menuBtn" type="button" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border border-slate-300 dark:border-slate-700" aria-label="Open menu" aria-expanded="false" onclick="__toggleMenu()">
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
       </div>
-      <div id="mobileMenu" class="md:hidden hidden py-3 border-t border-slate-200 dark:border-slate-800">
-        <nav class="flex flex-col gap-3 text-sm">
-          <a onclick="__toggleMenu()" href="#quick-start" class="hover:text-brand-700 dark:hover:text-brand-400">Quick Start</a>
-          <a onclick="__toggleMenu()" href="#features" class="hover:text-brand-700 dark:hover:text-brand-400">Features</a>
-          <a onclick="__toggleMenu()" href="#structure" class="hover:text-brand-700 dark:hover:text-brand-400">Structure</a>
-          <a onclick="__toggleMenu()" href="#links" class="hover:text-brand-700 dark:hover:text-brand-400">Links</a>
-          <button type="button" onclick="__toggleTheme(); __toggleMenu()" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-accent-300 text-accent-700 hover:bg-accent-50 dark:text-accent-400 dark:border-accent-700/60 dark:hover:bg-accent-900/20">Toggle Theme</button>
+      <div id="mobileMenu" class="md:hidden hidden py-3 border-t border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0e120e]/90 backdrop-blur-sm">
+        <nav class="flex flex-col gap-3 text-sm px-4">
+          <a onclick="__toggleMenu()" href="#quick-start" class="py-2 rounded hover:text-brand-700 dark:hover:text-brand-300">Quick Start</a>
+          <a onclick="__toggleMenu()" href="#features" class="py-2 rounded hover:text-brand-700 dark:hover:text-brand-300">Features</a>
+          <a onclick="__toggleMenu()" href="#structure" class="py-2 rounded hover:text-brand-700 dark:hover:text-brand-300">Structure</a>
+          <a onclick="__toggleMenu()" href="#links" class="py-2 rounded hover:text-brand-700 dark:hover:text-brand-300">Links</a>
+          <button type="button" onclick="__toggleTheme(); __toggleMenu()" class="mt-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md border border-accent-300 text-accent-700 hover:bg-accent-50 dark:text-accent-400 dark:border-accent-700/60 dark:hover:bg-accent-900/20">Toggle Theme</button>
         </nav>
       </div>
     </div>
