@@ -104,7 +104,7 @@
 
   <!-- Hero -->
   <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-accent-50 dark:from-brand-900/30 dark:via-transparent dark:to-accent-900/20"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-accent-50 opacity-90 md:opacity-100 dark:from-brand-900/30 dark:via-transparent dark:to-accent-900/20"></div>
     <!-- Decorative blobs -->
     <div class="pointer-events-none absolute -top-12 -left-12 h-56 w-56 rounded-full bg-accent-500/25 blur-3xl"></div>
     <div class="pointer-events-none absolute -bottom-16 -right-10 h-64 w-64 rounded-full bg-brand-500/20 blur-3xl"></div>
@@ -124,12 +124,12 @@
             Altarie.js gives you a clean, predictable structure with Fastify, Nunjucks, and better-sqlite3 — no transpilers, just ESM.
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
-            <a href="#quick-start" class="px-5 py-2.5 rounded-md bg-brand-700 text-white hover:bg-brand-800 shadow-brand">Get Started</a>
-            <a href="#features" class="px-5 py-2.5 rounded-md border border-accent-300 text-accent-700 hover:bg-accent-50 dark:text-accent-400 dark:border-accent-700/60 dark:hover:bg-accent-900/20">Explore Features</a>
-            <a href="https://github.com/gtkrshnaaa/altarie" class="px-5 py-2.5 rounded-md border border-slate-300 text-slate-800 hover:bg-white dark:text-slate-200 dark:border-slate-700 dark:hover:bg-[#161a16]">GitHub</a>
+            <a href="#quick-start" class="w-full sm:w-auto text-center px-5 py-2.5 rounded-md bg-brand-700 text-white hover:bg-brand-800 shadow-brand">Get Started</a>
+            <a href="#features" class="w-full sm:w-auto text-center px-5 py-2.5 rounded-md border border-accent-300 text-accent-700 bg-accent-50 hover:bg-accent-100 dark:text-accent-400 dark:border-accent-700/60 dark:bg-accent-900/10 dark:hover:bg-accent-900/20">Explore Features</a>
+            <a href="https://github.com/gtkrshnaaa/altarie" class="w-full sm:w-auto text-center px-5 py-2.5 rounded-md border border-slate-300 text-slate-800 bg-slate-100 hover:bg-white dark:text-slate-200 dark:border-slate-700 dark:bg-[#111411] dark:hover:bg-[#161a16]">GitHub</a>
           </div>
         </div>
-        <div class="md:pl-8">
+        <div class="mt-6 md:mt-0 md:pl-8">
           <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a16] shadow-sm overflow-hidden">
             <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0e120e] text-sm text-slate-600 dark:text-slate-300">Routing (Altarie)</div>
             <div class="relative">
@@ -155,7 +155,7 @@ export default async function (app) {
   </section>
 
   <!-- Quick Start -->
-  <section id="quick-start" class="py-16">
+  <section id="quick-start" class="py-12 md:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl font-semibold">Quick Start</h2>
       <ol class="mt-6 grid gap-4 md:gap-6 md:grid-cols-2">
@@ -208,7 +208,7 @@ cp .env.example .env
   </section>
 
   <!-- Features -->
-  <section id="features" class="py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
+  <section id="features" class="py-12 md:py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Features</h2>
       <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -241,7 +241,7 @@ cp .env.example .env
   </section>
 
   <!-- Structure -->
-  <section id="structure" class="py-16">
+  <section id="structure" class="py-12 md:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Project Structure</h2>
       <div class="mt-6 grid md:grid-cols-2 gap-6">
@@ -270,7 +270,7 @@ npm run db:migrate  # run migrations</code></pre>
   </section>
 
   <!-- Links -->
-  <section id="links" class="py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
+  <section id="links" class="py-12 md:py-16 bg-white dark:bg-[#0e120e] border-t border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Links</h2>
       <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
