@@ -1,6 +1,5 @@
 // Web routes for altarie.js
 import { HomeController } from '../app/controllers/HomeController.js'
-import { auth } from '../app/middleware/auth.js'
 
 export default async function (app) {
   const home = new HomeController()
@@ -8,7 +7,9 @@ export default async function (app) {
   app.get('/', async (request, reply) => home.index(request, reply))
 
   // Protected route example
-  app.get('/dashboard', { preHandler: auth }, async (request, reply) => {
+  // Use Laravel-like alias resolver defined in bootstrap/app.js via app.mw.resolve
+  const preAuth = app.mw.resolve(['auth'])
+  app.get('/dashboard', { preHandler: preAuth }, async (request, reply) => {
     return reply.render('dashboard.njk', {
       env: process.env.NODE_ENV || 'development'
     })

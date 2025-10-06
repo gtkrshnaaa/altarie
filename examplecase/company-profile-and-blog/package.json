@@ -3,7 +3,34 @@
   "version": "0.1.0",
   "description": "Laravel-like JavaScript framework (altarie.js)",
   "type": "module",
-  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtkrshnaaa/altarie.git"
+  },
+  "homepage": "https://github.com/gtkrshnaaa/altarie/altarie",
+  "keywords": [
+    "framework",
+    "fastify",
+    "nunjucks",
+    "sqlite",
+    "laravel-like",
+    "esm",
+    "nodejs"
+  ],
+  "files": [
+    "README.md",
+    "altarieguide.md",
+    "server.js",
+    "bootstrap/",
+    "config/",
+    "core/",
+    "routes/",
+    "app/",
+    "database/",
+    "public/",
+    "tests/"
+  ],
   "scripts": {
     "dev": "NODE_ENV=development nodemon server.js",
     "start": "NODE_ENV=production node server.js",

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Altarie — Laravel-like JS{% endblock %}</title>
+    <link rel="stylesheet" href="/css/app.css" />
+  </head>
+  <body>
+    <!-- Header with brand badge (Node.js green + pink accent) -->
+    <header class="site-header">
+      <nav class="site-nav container">
+        <a class="brand" href="/">
+          <span class="brand-badge" aria-hidden="true"></span>
+          <span class="brand-name">Altarie<span class="brand-dot">.js</span></span>
+        </a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="card hero">
+        {% block content %}{% endblock %}
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>© {{ (new Date()).getFullYear() if false }} Altarie · Node.js green with pink accent</small>
+      </div>
+    </footer>
+  </body>
+  
+</html>

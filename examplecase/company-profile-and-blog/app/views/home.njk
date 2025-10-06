@@ -1,0 +1,13 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}Altarie — Home{% endblock %}
+
+{% block content %}
+  <h1>Build with Altarie</h1>
+  <p>Laravel experience, JavaScript simplicity — Node.js green with a pink accent.</p>
+  <p>Environment: <code>{{ env }}</code></p>
+  <div style="margin-top:1rem; display:flex; gap:.75rem; flex-wrap:wrap;">
+    <a class="btn btn-primary" href="/docs">Get Started</a>
+    <a class="btn btn-outline" href="/_altarie/routes">View Routes</a>
+  </div>
+{% endblock %}
