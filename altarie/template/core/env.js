@@ -8,8 +8,10 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-export function loadEnv() {
-  const root = path.join(__dirname, '..')
+export function loadEnv(rootDir) {
+  const root = rootDir && typeof rootDir === 'string'
+    ? rootDir
+    : path.join(__dirname, '..')
   const envPath = path.join(root, '.env')
 
   if (fs.existsSync(envPath)) {

@@ -99,14 +99,54 @@ const boot = {
     }
     if (this.security?.helmet?.enabled) {
       const helmet = await import('@fastify/helmet')
-      await app.register(helmet.default, this.security.helmet.options || {})
+      const helmetOpts = { ...(this.security.helmet?.options || {}) }
+
+      // Optional CSP via ENV
+      const enableCsp = /^true|1|yes$/i.test(String(process.env.HELMET_CSP || ''))
+      if (enableCsp) {
+        const connectList = String(process.env.CSP_CONNECT_SRC || '')
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean)
+        const allowInline = /^true|1|yes$/i.test(String(process.env.CSP_SCRIPT_INLINE || ''))
+        helmetOpts.contentSecurityPolicy = {
+          directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", ...(allowInline ? ["'unsafe-inline'"] : [])],
+            connectSrc: ["'self'", ...connectList],
+            imgSrc: ["'self'", 'data:'],
+            styleSrc: ["'self'", 'https:', ...(allowInline ? ["'unsafe-inline'"] : [])],
+            objectSrc: ["'none'"],
+            baseUri: ["'self'"],
+            frameAncestors: ["'self'"],
+            upgradeInsecureRequests: null
+          }
+        }
+      }
+
+      await app.register(helmet.default, helmetOpts)
     }
     if (this.security?.cors?.enabled) {
       const cors = await import('@fastify/cors')
-      await app.register(cors.default, this.security.cors.options || { origin: true })
+      // Allow overriding CORS origin from env (comma-separated for multiple origins)
+      let origin = this.security.cors?.options?.origin
+      if (typeof process.env.CORS_ORIGIN === 'string') {
+        const list = process.env.CORS_ORIGIN.split(',').map(s => s.trim()).filter(Boolean)
+        origin = list.length > 1 ? list : list[0] || true
+      }
+      const options = { ...(this.security.cors?.options || {}), origin: origin ?? true }
+      await app.register(cors.default, options)
     }
     if (this.views?.enabled) {
       await this.setupViews(app)
+    }
+
+    // Optional global rate limit (enable via RATE_LIMIT_ENABLED=true)
+    if (String(process.env.RATE_LIMIT_ENABLED || '').toLowerCase() === 'true') {
+      const rateLimit = await import('@fastify/rate-limit')
+      const max = Number(process.env.RATE_LIMIT_MAX || 300)
+      const timeWindow = process.env.RATE_LIMIT_WINDOW || '1 minute'
+      await app.register(rateLimit.default, { max, timeWindow, allowList: (process.env.RATE_LIMIT_ALLOWLIST || '').split(',').map(s=>s.trim()).filter(Boolean) })
     }
 
     if (Array.isArray(explicitRoutes) && explicitRoutes.length > 0) {
@@ -124,6 +164,15 @@ const boot = {
 
     app.setErrorHandler(this.errorHandler)
     app.setNotFoundHandler(async (request, reply) => {
+      const accept = String(request.headers['accept'] || '')
+      const wantsJson = /application\/json|\bjson\b/.test(accept)
+      if (wantsJson) {
+        return reply.type('application/json').status(404).send({
+          statusCode: 404,
+          message: 'Route not found',
+          url: request.url
+        })
+      }
       const template = this.notFound?.template || 'errors/404.njk'
       return reply.render(template, { url: request.url })
     })
@@ -136,21 +185,23 @@ const boot = {
   },
 
   createServer({ isDev } = { isDev: process.env.NODE_ENV === 'development' }) {
-    const app = Fastify({
-      logger: isDev
-        ? {
-            transport: {
-              target: 'pino-pretty',
-              options: { translateTime: 'HH:MM:ss Z', colorize: true, ignore: 'pid,hostname' }
-            }
+    const level = process.env.LOG_LEVEL || (isDev ? 'debug' : 'info')
+    const logger = isDev
+      ? {
+          level,
+          transport: {
+            target: 'pino-pretty',
+            options: { translateTime: 'HH:MM:ss Z', colorize: true, ignore: 'pid,hostname' }
           }
-        : true
-    })
+        }
+      : { level }
+    const trustProxy = /^true|1|yes$/i.test(String(process.env.TRUST_PROXY || ''))
+    const app = Fastify({ logger, trustProxy })
     return app
   },
 
   async start() {
-    loadEnv()
+    loadEnv(path.join(__dirname, '..'))
     const isDev = process.env.NODE_ENV === 'development'
     const app = this.createServer({ isDev })
     await this.registerMiddleware(app)
@@ -205,7 +256,7 @@ export const Application = {
         return this
       },
       async create() {
-        loadEnv()
+        loadEnv(state.basePath)
         const isDev = process.env.NODE_ENV === 'development'
         const app = boot.createServer({ isDev })
 

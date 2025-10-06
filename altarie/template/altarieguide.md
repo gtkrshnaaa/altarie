@@ -367,3 +367,93 @@ General tips:
 ---
 
 Happy building with Altarie.js!
+
+---
+
+## 15.1) Production Configuration (ENV)
+
+Use `.env` to control production behavior. Altarie reads env at startup via `loadEnv(basePath)`.
+
+Recommended keys:
+
+```env
+APP_PORT=3000
+NODE_ENV=production
+LOG_LEVEL=info
+
+# CORS: comma-separated origins (exact scheme+host, optional port)
+CORS_ORIGIN=https://yourdomain.com,https://admin.yourdomain.com
+
+# If behind reverse proxy / ingress
+TRUST_PROXY=true
+
+# Global rate limit (optional)
+RATE_LIMIT_ENABLED=true
+RATE_LIMIT_MAX=300
+RATE_LIMIT_WINDOW=1 minute
+RATE_LIMIT_ALLOWLIST=127.0.0.1
+
+# Helmet CSP (optional)
+HELMET_CSP=true
+# allow extra connection targets (comma-separated)
+CSP_CONNECT_SRC=https://api.yourdomain.com,https://logs.yourdomain.com
+# allow inline scripts if absolutely necessary
+CSP_SCRIPT_INLINE=false
+```
+
+Notes:
+
+- `CORS_ORIGIN` may be a single value or comma-separated list.
+- Rate limit is global and should be tuned based on traffic.
+- `HELMET_CSP` adds a sensible CSP with `connect-src`, `img-src data:`, and optional inline allowances.
+- `LOG_LEVEL`: use `info` or `warn` in production.
+
+---
+
+## 15.2) PM2 Deployment Example
+
+Create `ecosystem.config.js` in your project root (next to `server.js`):
+
+```js
+module.exports = {
+  apps: [
+    {
+      name: 'altarie-app',
+      script: 'server.js',
+      node_args: '--enable-source-maps',
+      env: {
+        NODE_ENV: 'production',
+        APP_PORT: 3000,
+        LOG_LEVEL: 'info',
+        TRUST_PROXY: 'true',
+        CORS_ORIGIN: 'https://yourdomain.com,https://admin.yourdomain.com',
+        RATE_LIMIT_ENABLED: 'true',
+        RATE_LIMIT_MAX: '300',
+        RATE_LIMIT_WINDOW: '1 minute'
+      }
+    }
+  ]
+}
+```
+
+Commands:
+
+```bash
+pm2 start ecosystem.config.js
+pm2 status
+pm2 logs altarie-app
+pm2 restart altarie-app
+```
+
+Behind nginx (snippet):
+
+```nginx
+location / {
+  proxy_pass http://127.0.0.1:3000;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
