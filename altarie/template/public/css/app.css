@@ -1,6 +1,101 @@
-/* Basic styles for altarie.js demo */
-:root { color-scheme: light dark; }
-body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
-main { max-width: 60rem; margin: 0 auto; padding: 2rem; }
-h1 { font-size: 2rem; margin: 0 0 0.5rem; }
-p { margin: 0.25rem 0; }
+/* Theme: Altarie — Node.js green with pink accents */
+/* All program comments should use English. */
+
+:root {
+  color-scheme: light dark;
+  /* Brand and accent */
+  --brand: #339933;       /* Node.js green */
+  --brand-600: #2b812c;
+  --brand-700: #256d26;
+  --accent: #ff5ca8;      /* Pink blossom */
+  --accent-600: #e44f95;
+  --accent-700: #c64281;
+
+  /* Light palette */
+  --bg: #f6fff6;
+  --fg: #1b1f1a;
+  --muted: #5b6b57;
+  --card: #ffffff;
+  --border: #dbe7db;
+  --shadow: 0 10px 25px rgba(51,153,51,0.08), 0 2px 6px rgba(0,0,0,0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark palette */
+    --bg: #0e120e;
+    --fg: #e8f5e8;
+    --muted: #a7b9a4;
+    --card: #161a16;
+    --border: #2a342a;
+    --shadow: 0 10px 25px rgba(51,153,51,0.18), 0 2px 6px rgba(0,0,0,0.3);
+  }
+}
+
+/* Base layout */
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: var(--brand); text-decoration: none; }
+a:hover { color: var(--brand-600); text-decoration: underline; }
+
+.container { max-width: 70rem; margin: 0 auto; padding: 2rem; }
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 10%, var(--bg)), var(--bg));
+}
+.site-nav { display: flex; align-items: center; gap: 1rem; padding: 1rem 2rem; }
+.brand {
+  display: inline-flex; align-items: center; gap: .6rem; font-weight: 800;
+  letter-spacing: .2px; font-size: 1.125rem; color: var(--fg);
+}
+.brand-badge {
+  width: 28px; height: 28px; border-radius: 9px;
+  background: radial-gradient(35% 35% at 30% 30%, var(--accent) 0%, transparent 100%),
+              radial-gradient(40% 40% at 65% 60%, var(--accent-600) 0%, transparent 100%),
+              radial-gradient(100% 100% at 50% 50%, var(--brand) 0%, var(--brand-700) 100%);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--brand) 70%, var(--bg)), var(--shadow);
+  position: relative;
+}
+.brand-badge::after {
+  /* little leaf */
+  content: ""; position: absolute; width: 12px; height: 8px; right: -4px; top: -3px;
+  background: var(--brand); border-radius: 10px 10px 10px 0 / 10px 10px 10px 0;
+  transform: rotate(25deg);
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+.brand-name { color: var(--brand-700); }
+.brand-dot { color: var(--accent); }
+
+/* Card */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+/* Main */
+main { padding: 2rem; }
+.hero { padding: 2rem; }
+.hero h1 { font-size: 2.25rem; line-height: 1.15; margin: 0 0 .5rem; }
+.hero p { margin: 0.25rem 0; color: var(--muted); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1rem; border-radius: 10px; font-weight: 600; }
+.btn-primary { background: var(--brand); color: #fff; border: 1px solid color-mix(in srgb, var(--brand) 75%, #000); }
+.btn-primary:hover { background: var(--brand-600); }
+.btn-outline { background: transparent; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 65%, var(--bg)); }
+.btn-outline:hover { background: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--border); color: var(--muted); padding: 1.25rem 2rem; }
